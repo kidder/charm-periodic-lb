@@ -1,0 +1,26 @@
+mainmodule ping {
+
+  readonly CProxy_Main mainProxy;
+  readonly CProxy_Pingers pingersProxy;
+  readonly CProxy_Pingees pingeesProxy;
+
+  mainchare Main {
+    entry Main(CkArgMsg* msg);
+    entry void execute();
+    entry void check();
+    entry void exit();
+    entry [reductiontarget] void migrated();
+    entry [reductiontarget] void count_errors(const int errors);
+  };
+
+  array [1D] Pingers {
+    entry Pingers();
+    entry void send_pings();
+  };
+
+  array [1D] Pingees {
+    entry Pingees();
+    entry void receive_ping(const int iteration, const int index_of_pinger);
+    entry void check(const int migrations_recorded_by_main);
+  };
+};
